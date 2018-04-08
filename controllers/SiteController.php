@@ -104,6 +104,7 @@ class SiteController extends Controller
         $series = [];
 
         foreach ($stack as $name => $data) {
+            $name .= count($data);
             $chartSeries = new ChartSeries();
             $chartSeries->setAttributes(compact('name', 'data'));
 
