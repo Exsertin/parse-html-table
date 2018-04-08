@@ -36,7 +36,7 @@ class TransactionTableParser extends BaseObject implements ServiceInterface
     {
         try {
             $transactions = [];
-            $table = $this->_dom->getElementsByTagName('table1')->item(0);
+            $table = $this->_dom->getElementsByTagName('table')->item(0);
             $type = null;
 
             /** @var \DOMElement $tr */
