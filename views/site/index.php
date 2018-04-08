@@ -1,12 +1,19 @@
 <?php
 use yii\widgets\ActiveForm;
+use yii\bootstrap\Html;
 ?>
 
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+<div class="jumbotron">
 
-<?= $form->field($model, 'file')->fileInput()->label('Load html') ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+<div>
+    <?= $form->field($model, 'file')
+        ->fileInput(['class' => 'btn btn-primary'])
+        ->label('Load html') ?>
+</div>
+    <?= Html::submitButton('Submit', ['class' => 'btn btn-lg btn-success'])?>
 
-<button>Submit</button>
+    <?php ActiveForm::end() ?>
+</div>
 
-<?php ActiveForm::end() ?>
 

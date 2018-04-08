@@ -113,3 +113,11 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+label {
+    font-size:30px;
+}
+
+input[type=file] {
+    display:inline-block;
+}
