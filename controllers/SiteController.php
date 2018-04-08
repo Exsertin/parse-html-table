@@ -85,6 +85,7 @@ class SiteController extends Controller
     /**
      * @param UploadedFile $file
      * @return array
+     * @throws \yii\web\BadRequestHttpException
      */
     public function getSeries(UploadedFile $file): array
     {
