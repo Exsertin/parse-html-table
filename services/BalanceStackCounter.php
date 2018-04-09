@@ -18,12 +18,14 @@ final class BalanceStackCounter extends BaseObject implements ServiceInterface
 {
     private const DEFAULT_BALANCE = 0.0;
 
+    private $_account;
     private $_balance = self::DEFAULT_BALANCE;
     private $_stack = [];
     private $_transactions;
 
-    public function __construct(array $transactions, array $config = [])
+    public function __construct(float $account, array $transactions, array $config = [])
     {
+        $this->_account = $account;
         $this->_transactions = $transactions;
         parent::__construct($config);
     }
@@ -47,7 +49,7 @@ final class BalanceStackCounter extends BaseObject implements ServiceInterface
 
     private function resetBalance(): void
     {
-        $this->_balance = self::DEFAULT_BALANCE;
+        $this->_balance = $this->_account > 0 ? $this->_account : self::DEFAULT_BALANCE;
     }
 
     /**
@@ -56,14 +58,6 @@ final class BalanceStackCounter extends BaseObject implements ServiceInterface
      */
     private function addBalance(string $key, TransactionModel $model): void
     {
-        $balance = $this->_balance;
-
-        if ($model->type == TransactionModel::TYPE_BALANCE) {
-            $balance = $model->profit;
-        } else {
-            $balance += $model->profit;
-        }
-
-        $this->_stack[$key][] = $this->_balance = $balance;
+        $this->_stack[$key][] = $this->_balance += $model->profit;
     }
 }

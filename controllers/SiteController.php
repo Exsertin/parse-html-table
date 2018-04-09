@@ -61,10 +61,14 @@ class SiteController extends Controller
      *
      * @return string
      * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\BadRequestHttpException
      */
     public function actionIndex()
     {
-        $model = DynamicModel::validateData(['file'], [['file', 'file', 'extensions' => 'html']]);
+        $model = DynamicModel::validateData(['file'], [
+            ['file', 'required'],
+            ['file', 'file', 'extensions' => 'html'],
+        ]);
 
         if (Yii::$app->request->isPost) {
             $file = UploadedFile::getInstance($model, 'file');
@@ -99,7 +103,7 @@ class SiteController extends Controller
         $dom = new \DOMDocument();
         $dom->loadHTML($file);
         $parser = new TransactionTableParser($dom);
-        $balanceStackCounter = new BalanceStackCounter($parser->run());
+        $balanceStackCounter = new BalanceStackCounter($parser->getAccount(), $parser->run());
         $stack = $balanceStackCounter->run();
         $series = [];
 

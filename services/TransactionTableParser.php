@@ -68,4 +68,21 @@ class TransactionTableParser extends BaseObject implements ServiceInterface
 
         return $transactions;
     }
+
+    /**
+     * @return float
+     */
+    public function getAccount(): float
+    {
+        $dom = $this->_dom;
+
+        /** @var \DOMElement $b */
+        foreach ($dom->getElementsByTagName('b') as $b) {
+            if (preg_match("/Account:/", $b->nodeValue)) {
+                return (float)preg_replace("/[^0-9]/", '', $b->nodeValue);
+            }
+        }
+
+        return 0;
+    }
 }
