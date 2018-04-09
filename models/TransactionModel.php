@@ -28,7 +28,7 @@ class TransactionModel extends Model
             ['profit', 'number'],
             ['type', 'string'],
             ['type', 'trim'],
-            ['type', 'in', 'range' => [self::TYPE_BALANCE, self::TYPE_BUY]],
+//            ['type', 'in', 'range' => [self::TYPE_BALANCE, self::TYPE_BUY]],
         ];
     }
 }
