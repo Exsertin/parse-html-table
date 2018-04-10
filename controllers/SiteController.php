@@ -8,8 +8,10 @@ use app\services\TransactionTableParser;
 use Yii;
 use yii\base\DynamicModel;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\web\HttpException;
 use yii\web\UploadedFile;
 
 class SiteController extends Controller
@@ -62,6 +64,8 @@ class SiteController extends Controller
      * @return string
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\web\BadRequestHttpException
+     * @throws HttpException
+     * @throws \Throwable
      */
     public function actionIndex()
     {
@@ -71,8 +75,17 @@ class SiteController extends Controller
         ]);
 
         if (Yii::$app->request->isPost) {
-            $file = UploadedFile::getInstance($model, 'file');
-            $series = $this->getSeries($file);
+
+            try {
+                $file = UploadedFile::getInstance($model, 'file');
+                $series = $this->getSeries($file);
+            } catch (\Throwable $e) {
+                if ($e instanceof HttpException) {
+                    throw $e;
+                }
+
+                throw new BadRequestHttpException('Incorrect file');
+            }
 
             if (empty($series)) {
                 $this->goHome();
