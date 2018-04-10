@@ -1,6 +1,8 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Html;
+
+$this->title = 'Highcharts';
 ?>
 
 <div class="jumbotron">
